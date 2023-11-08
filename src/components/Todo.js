@@ -28,18 +28,19 @@ function Todo() {
       if (todo.trim() !== "") {
         const todoLowerCase = todo.toLowerCase();
         const isDuplicate = todos.some(
-          (item) => item.list.toLowerCase() === todoLowerCase
+          (item) =>
+          item.list.toLowerCase() === todoLowerCase && item.id !== editId
         );
   
         if (!isDuplicate) {
           if (editId) {
             const editTodo = todos.find((todo) => todo.id === editId);
-            const updateTodo = todos.map((to) =>
-              to.id === editTodo.id
-                ? (to = { id: to.id, list: todo })
-                : (to = { id: to.id, list: to.list })
-            );
-            setTodos(updateTodo);
+            const updatedTodos = todos.map((to)=>
+            to.id === editTodo.id
+            ?{id:to.id,list:todo,status:to.status}
+            :to
+            )
+            setTodos(updatedTodos);
             setEditID(0);
             setTodo(" ");
           } else {
